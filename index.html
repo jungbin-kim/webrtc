@@ -1,0 +1,63 @@
+<html lang="en">
+<head>
+
+  <meta charset="utf-8">
+  <meta name="description" content="Test WebRTC">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta id="theme-color" name="theme-color" content="#fff">
+
+  <base target="_blank">
+
+  <title>TEST WebRTC</title>
+
+  <style>
+    html, body {
+      height:100%;
+      margin:0;
+      padding:0;
+    }
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @media (min-width: 1000px) {
+      video {
+        height: 480px;
+      }
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <div id="container">
+
+    <video autoplay playsinline></video>
+
+  </div>
+
+  <script>
+    var constraints = {
+      video: true
+    };
+
+    var video = document.querySelector('video');
+
+    function handleSuccess(stream) {
+      window.stream = stream; // only to make stream available to console
+      video.srcObject = stream;
+    }
+
+    function handleError(error) {
+      console.log('getUserMedia error: ', error);
+    }
+
+    navigator.mediaDevices.getUserMedia(constraints).
+      then(handleSuccess).catch(handleError);
+  </script>
+
+</body>
+</html>
