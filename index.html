@@ -28,6 +28,9 @@
         height: 480px;
       }
     }
+    button {
+      position: absolute;
+    }
   </style>
 
 </head>
@@ -36,11 +39,12 @@
 
   <div id="container">
     <video autoplay playsinline></video>
+    <button onclick="onClickChangeFrontBtn()">Change Front/Back</button>
   </div>
 
   <script>
     var constraints = {
-      video: true
+      video: { facingMode: "user" }
     };
 
     var video = document.querySelector('video');
@@ -52,6 +56,16 @@
 
     function handleError(error) {
       console.log('getUserMedia error: ', error);
+    }
+
+    function onClickChangeFrontBtn(e){
+        console.log("click changing front btn", e);
+        if (constraints.video.facingMode === "user") constraints.video.facingMode = "environment";
+        else constraints.video.facingMode = "user";
+        navigator.mediaDevices
+            .getUserMedia(constraints)
+            .then(handleSuccess)
+            .catch(handleError);
     }
 
     navigator.mediaDevices.getUserMedia(constraints).
